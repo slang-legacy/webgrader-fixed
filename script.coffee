@@ -10,9 +10,9 @@
 
 # please note: this is not a very beautiful script, it uses eval, doesn't
 # group functionality in functions, and doesn't use a very logical
-# organization. I could have designed this with backbone, or a nice framework,
-# but the goal was to just make a quick project to improve the way that
-# webgrader displays scores. In short, this project uses a ton of bad
+# organization. I could have designed this with backbone or another nice
+# framework, but the goal was to just make a quick project to improve the way
+# that webgrader displays scores. In short, this project uses a ton of bad
 # practices, don't learn from it.
 
 `
@@ -38,7 +38,7 @@ e=(e.width+a)/b.length,j=this.colours(),i=0;i<b.length;i++){var g=b[i],k=i*e,n=h
 `
 
 round = (number, decmils) ->
-  Math.round(number*Math.pow(10,decmils))/Math.pow(10,decmils)
+	Math.round(number*Math.pow(10,decmils))/Math.pow(10,decmils)
 
 convert_grade = (decmil_grade) ->
 	#decmil_grade *= 4
@@ -131,10 +131,17 @@ for assignment_type in ['formative', 'summative']
 			unique_comment: assignment[7].innerHTML
 		}
 
+total_correct_grade = 0
+
 for assignment in assignments
 	weight = if assignment['type'] is 'formative' then 0.1 else 0.9
 	assignment['percent_of_grade'] = (assignment['multiplier'] / multiplier_sum[assignment['type']]) * weight
+	assignment['points_gained'] = assignment['score']*4*assignment['percent_of_grade']
+	assignment['points_lost'] = (1-assignment['score'])*4*assignment['percent_of_grade']
+	unless isNaN(assignment['points_gained'])
+		total_correct_grade += assignment['points_gained']
 
+console.log 'grade: ' + total_correct_grade
 
 table = ''
 for assignment in assignments
@@ -146,8 +153,10 @@ for assignment in assignments
 			<td style="padding-left: 0"><span class="pie" data-colours='["green", "red"]'>#{assignment['score']}/1</span></td>
 			<td class="has_pie">#{round(assignment['percent_of_grade']*100, 2)}%</td>
 			<td style="padding-left: 0">
-				<span class="pie" data-colours='["green","red","#D3D3D3"]'>#{assignment['score']*assignment['percent_of_grade']},#{(1-assignment['score'])*assignment['percent_of_grade']},#{1-assignment['percent_of_grade']}</span>
+				<span class="pie" data-colours='["green","red","#D3D3D3"]'>#{assignment['points_gained']},#{assignment['points_lost']},#{(1-assignment['percent_of_grade'])*4}</span>
 			</td>
+			<td>#{round(assignment['points_gained'], 4)}</td>
+			<td>#{round(assignment['points_lost'], 4)}</td>
 			<td>#{assignment['defined_comment']}</td>
 			<td>#{assignment['unique_comment']}</td>
 		</tr>
@@ -155,8 +164,12 @@ for assignment in assignments
 
 
 # determine how much webgrader's calculation for the grade is off by
+stats = ''
 
-stats = """
+if round(total_correct_grade, 2) isnt class_info['webgrader_grade']
+	stats += '<p>FYI: webgrader calculated your grade incorrectly. it should be #{round(total_correct_grade, 2)}</p>'
+
+stats += """
 	<p class="class_info">
 		pts till (better grade)/(worse grade): <b>(#{round(class_info['points_till_increase'], 2)})/(#{round(class_info['points_till_decrease'], 2)})</b>
 		<span class="small_pie" data-colours='["green", "red"]'>#{class_info['points_till_decrease']},#{class_info['points_till_increase']}</span>
@@ -231,6 +244,8 @@ $('#lblReport').html("""
 				<th>Due Date</td>
 				<th colspan="2">Score</td>
 				<th colspan="2">% of Total Grade</td>
+				<th>Points Gained</th>
+				<th>Points Lost</th>
 				<th>Defined Comment</td>
 				<th>Unique Comment</td>
 			</tr>
@@ -239,9 +254,7 @@ $('#lblReport').html("""
 			#{table}
 		</tbody>
 	</table>
-	<p>
-		The documentation for "Webgrader: Fixed" is avaliable <a href="https://github.com/slang800/webgrader-fixed/blob/master/README.md">here</a>. If you have any questions or you find a bug, open an issue <a href="https://github.com/slang800/webgrader-fixed/issues">here</a>. If you find this plugin useful, tip me on Gittip: <iframe style="border: 0; margin: 0; padding: 0;" src="https://www.gittip.com/slang800/widget.html" width="48pt" height="22pt"></iframe> 
-	</p>
+	<p>The documentation for "Webgrader: Fixed" is avaliable <a href="https://github.com/slang800/webgrader-fixed/blob/master/README.md">here</a>. If you have any questions or you find a bug, open an issue <a href="https://github.com/slang800/webgrader-fixed/issues">here</a>. If you find this plugin useful, tip me on Gittip: <iframe style="border: 0; margin: 0; padding: 0;" src="https://www.gittip.com/slang800/widget.html" width="48pt" height="22pt"></iframe> </p>
 """)
 
 $("span.pie").peity "pie", diameter: '30'
