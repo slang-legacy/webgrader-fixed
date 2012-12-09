@@ -3,7 +3,13 @@ webgrader-fixed
 
 Since webgrader really sucks at presenting data (and makes it look like all those meaningless formative assignments are actually important), I hacked together a quick chrome plugin to fix those ugly webgrader reports. The basic goal is to show what projects actually matter, how close you are to getting a higher grade (FYI: a 3.50 is the same as a 3.74, the school cuts off any extra points), how your grade is mapped to a GPA, and to make it easier to view scores (making good and bad grades very obvious).
 
-To view your grades with webgrader-fixed, install this plugin and then go to the "detailed" report, in webgrader, for the class you want to view. The page will be automatically converted into a sortable, graphical representation of your grades.
+#how to use
+
+Since I really don't feel like paying the fee to host this extension on the Chrome Web Store, you will need to install it manually. But don't worry, it's still pretty easy to do. Just download the file [here](https://github.com/downloads/slang800/webgrader-fixed/webgrader-fixed.crx), open [this link](chrome://chrome/extensions/), then drag `webgrader-fixed.crx` on to the Extensions page to install it.
+
+To view your grades with webgrader-fixed, go to the "detailed" report, in webgrader, for the class you want to view. The page will be automatically converted into a sortable, graphical representation of your grades.
+
+#notes
 
 If you are viewing an AP class, your GPA is increased by 1 point (so long as your grade is not below a ____), but your letter grade remains the same.
 
