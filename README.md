@@ -9,6 +9,8 @@ Since I really don't feel like paying the fee to host this extension on the Chro
 
 To view your grades with webgrader-fixed, go to the "detailed" report, in webgrader, for the class you want to view. The page will be automatically converted into a sortable, graphical representation of your grades.
 
+![Screenshot](https://raw.github.com/slang800/psychic-ninja/master/webgrader-fixed.png)
+
 #notes
 
 If you are viewing an AP class, your GPA is increased by 1 point (so long as your grade is not below a ____), but your letter grade remains the same.
