@@ -1,0 +1,16 @@
+{
+   "content_scripts": [ {
+      "exclude_globs": [  ],
+      "exclude_matches": [  ],
+      "include_globs": [ "http://www.webgrader.com/CLI.WebGrader.Web/ParentStudent/Reports.aspx\\?t=1*" ],
+      "js": [ "script.js" ],
+      "matches": [ "http://*/*", "https://*/*" ],
+      "run_at": "document_idle"
+   } ],
+   "converted_from_user_script": true,
+   "description": "Improvements for Webgrader",
+   "key": "VRgLb44kbv2BPzRqXNJOeT9zfa9iH9ii1MMMeDhT/fM=",
+   "name": "Webgrader: Fixed",
+   "version": "1",
+   "manifest_version": 2
+}
