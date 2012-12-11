@@ -134,7 +134,7 @@ for assignment in assignments
 stats = ''
 
 if round(total_correct_grade, 2) isnt class_info['webgrader_grade']
-	stats += '<p>FYI: webgrader calculated your grade incorrectly. it should be #{round(total_correct_grade, 2)}</p>'
+	stats += "<p>FYI: webgrader calculated your grade incorrectly. it should be #{round(total_correct_grade, 2)}</p>"
 
 stats += """
 	<p class="class_info">
