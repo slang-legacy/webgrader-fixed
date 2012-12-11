@@ -5,7 +5,7 @@ Since webgrader really sucks at presenting data (and makes it look like all thos
 
 #how to use
 
-Since I really don't feel like paying the fee to host this extension on the Chrome Web Store, you will need to install it manually. But don't worry, it's still pretty easy to do. Just download the file [here](https://github.com/downloads/slang800/webgrader-fixed/webgrader-fixed.crx), open `chrome://chrome/extensions/` in a new tab, then drag `webgrader-fixed.crx` on to the Extensions page to install it.
+Since I really don't feel like paying the fee to host this extension on the Chrome Web Store, you will need to install it manually. But don't worry, it's still pretty easy to do. Just download the file [here](https://github.com/downloads/slang800/webgrader-fixed/webgrader-fixed-1.1.crx), open `chrome://chrome/extensions/` in a new tab, then drag `webgrader-fixed.crx` on to the Extensions page to install it.
 
 To view your grades with webgrader-fixed, go to the "detailed" report, in webgrader, for the class you want to view. The page will be automatically converted into a sortable, graphical representation of your grades.
 
