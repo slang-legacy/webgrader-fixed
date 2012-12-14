@@ -30,8 +30,8 @@ convert_grade = (decmil_grade) ->
 
 			return (
 				recorded_sdw_grade: rank[0]
-				# idk if the AP gpa limit on lower grades is correct
-				gpa_value: if class_info['is_AP'] and decmil_grade >= 1.25 then rank[1] + 1 else rank[1]
+				# C- is lowest grade you can get and still have it bumped up
+				gpa_value: if class_info['is_AP'] and decmil_grade >= 1.75 then rank[1] + 1 else rank[1]
 				letter_grade: rank[2]
 				points_till_increase: (
 					if i is 0
@@ -58,7 +58,7 @@ class_info =
 	webgrader_grade: +/[0-9](:?\.[0-9]*)?/.exec(class_info_html[2].innerHTML)[0]
 	is_AP: false
 
-class_info['is_AP'] = /^Ap\s/i.test(class_info['name'])
+class_info['is_AP'] = /^Ap\s/i.test(class_info['name']) and not /^Ap prep\s/i.test(class_info['name'])
 
 for key, value of convert_grade(class_info['webgrader_grade'])
 	class_info[key] = value
