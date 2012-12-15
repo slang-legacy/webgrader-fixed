@@ -3,17 +3,18 @@ webgrader-fixed
 
 Since webgrader really sucks at presenting data (and makes it look like all those meaningless formative assignments are actually important), I hacked together a quick chrome plugin to fix those ugly webgrader reports. The basic goal is to show what projects actually matter, how close you are to getting a higher grade (FYI: a 3.50 is the same as a 3.74, the school cuts off any extra points), how your grade is mapped to a GPA, and to make it easier to view scores (making good and bad grades very obvious).
 
+![Screenshot](https://raw.github.com/slang800/psychic-ninja/master/webgrader-fixed.png)
+
 #how to use
 
-Since I really don't feel like paying the fee to host this extension on the Chrome Web Store, you will need to install it manually. But don't worry, it's still pretty easy to do. Just download the file [here](https://github.com/downloads/slang800/webgrader-fixed/webgrader-fixed-1.1.crx), open `chrome://chrome/extensions/` in a new tab, then drag `webgrader-fixed.crx` on to the Extensions page to install it.
+Since I really don't feel like paying the fee to host this extension on the Chrome Web Store, you will need to install it manually. But don't worry, it's still pretty easy to do. Just download the file [here](https://github.com/slang800/webgrader-fixed/raw/master/webgrader-fixed.crx), open `chrome://chrome/extensions/` in a new tab, then drag `webgrader-fixed.crx` from your downloads bar (or from your downloads folder) on to the Extensions page to install it.
 
 To view your grades with webgrader-fixed, go to the "detailed" report, in webgrader, for the class you want to view. The page will be automatically converted into a sortable, graphical representation of your grades.
 
-![Screenshot](https://raw.github.com/slang800/psychic-ninja/master/webgrader-fixed.png)
 
 #notes
 
-If you are viewing an AP class, your GPA is increased by 1 point (so long as your grade is not below a ____), but your letter grade remains the same.
+If you are viewing an AP class, your GPA is increased by 1 point (so long as your grade is not below a C-). But your letter grade remains the same.
 
 The school cuts off any extra points that you get above the letter grade you currently have (so a 3.50 is the same as a 3.74). To illustrate this, "pts till (better grade)/(worse grade)" shows you how close you are to the next better grade (when the circle is mostly green you are really close to getting a higher grade in the class). This rounding is not used on assignments, only class grades.
 
