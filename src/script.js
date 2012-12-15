@@ -108,8 +108,6 @@ var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga
     }
   }
 
-  console.log('grade: ' + total_correct_grade);
-
   table = '';
 
   for (_l = 0, _len3 = assignments.length; _l < _len3; _l++) {

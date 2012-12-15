@@ -121,8 +121,6 @@ for assignment in assignments
 	unless isNaN(assignment['points_gained'])
 		total_correct_grade += assignment['points_gained']
 
-console.log 'grade: ' + total_correct_grade
-
 table = ''
 for assignment in assignments
 	table += """
