@@ -1,4 +1,4 @@
-webgrader-fixed
+webgrader-fixed - [download](https://github.com/slang800/webgrader-fixed/raw/master/webgrader-fixed.crx)
 ===============
 
 Since webgrader really sucks at presenting data (and makes it look like all those meaningless formative assignments are actually important), I hacked together a quick chrome plugin to fix those ugly webgrader reports. The basic goal is to show what projects actually matter, how close you are to getting a higher grade (FYI: a 3.50 is the same as a 3.74, the school cuts off any extra points), how your grade is mapped to a GPA, and to make it easier to view scores (making good and bad grades very obvious).
