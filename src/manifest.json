@@ -1,12 +1,12 @@
 {
    "content_scripts": [ {
       "matches": ["http://www.webgrader.com/CLI.WebGrader.Web/ParentStudent/Reports.aspx?t=1*"],
-      "js": ["jquery.js", "tablesorter.js", "peity.js", "script.js"],
+      "js": ["jquery.js", "tablesorter.js", "peity.js", "piwik.js", "script.js"],
       "run_at": "document_idle"
    } ],
    "description": "Improvements for Webgrader",
    "update_url": "https://raw.github.com/slang800/webgrader-fixed/master/updates.xml",
    "name": "Webgrader: Fixed",
-   "version": "1.2",
+   "version": "1.3",
    "manifest_version": 2
 }

@@ -1,17 +1,5 @@
 (function() {
-  
-var _gaq = _gaq || [];
-_gaq.push(['_setAccount', 'UA-37054480-1']);
-_gaq.push(['_trackPageview']);
-
-(function() {
-var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
-ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
-var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
-})();
-;
-
-  var assignment, assignment_type, assignments, assignments_raw, class_info, class_info_html, convert_grade, key, multiplier, multiplier_sum, print_grade, round, score, stats, table, tables, total_correct_grade, value, weight, _i, _j, _k, _l, _len, _len1, _len2, _len3, _ref, _ref1, _ref2;
+  var assignment, assignment_type, assignments, assignments_raw, class_info, class_info_html, convert_grade, key, multiplier, multiplier_sum, piwikTracker, pkBaseURL, print_grade, round, score, stats, table, tables, total_correct_grade, value, weight, _i, _j, _k, _l, _len, _len1, _len2, _len3, _ref, _ref1, _ref2;
 
   round = function(number, decmils) {
     return Math.round(number * Math.pow(10, decmils)) / Math.pow(10, decmils);
@@ -134,7 +122,17 @@ var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga
     stats += "<p class=\"class_info\">\n	" + key + ": <b>" + (isNaN(value) ? value : round(value, 2)) + "</b>\n</p>";
   }
 
-  $('#lblReport').html("<style>\n.class_info {\ndisplay: inline;\npadding-left: 15px;\n}\n#assignments{\nmargin: 20px;\ndisplay: inline-block;\n}\n#lblReport div {\ndisplay: inline-block;\n}\n#assignments td, #assignments th{\nborder-bottom:1px solid #000;\npadding: 5px 15px;\nvertical-align: middle;\n}\n#assignments td.has_pie{\npadding-right: 5px;\ntext-align: right;\n}\n#assignments thead{\nfont-size: 10px;\ntext-align: left;\nbackground: #999;\n}\n#lblReport canvas, #lblReport p{\nvertical-align: middle;\n}\ntable.tablesorter thead tr .header {\nbackground-image: url('data:image/gif;base64,R0lGODlhFQAJAIAAACMtMP///yH5BAEAAAEALAAAAAAVAAkAAAIXjI+AywnaYnhUMoqt3gZXPmVg94yJVQAAOw==');\nbackground-repeat: no-repeat;\nbackground-position: center right;\ncursor: pointer;\n}\ntable.tablesorter thead tr .headerSortUp {\nbackground-image: url('data:image/gif;base64,R0lGODlhFQAEAIAAACMtMP///yH5BAEAAAEALAAAAAAVAAQAAAINjB+gC+jP2ptn0WskLQA7');\n}\ntable.tablesorter thead tr .headerSortDown {\nbackground-image: url('data:image/gif;base64,R0lGODlhFQAEAIAAACMtMP///yH5BAEAAAEALAAAAAAVAAQAAAINjI8Bya2wnINUMopZAQA7');\n}\ntable.tablesorter thead tr .headerSortDown, table.tablesorter thead tr .headerSortUp {\nbackground-color: #8dbdd8;\n}\np iframe{\nvertical-align: middle;\n}\n</style>\n" + stats + "\n<table id=\"assignments\" class=\"tablesorter\">\n	<thead>\n		<tr>\n			<th>Name</td>\n			<th>Due Date</td>\n			<th colspan=\"2\">Score</td>\n			<th colspan=\"2\">% of Total Grade</td>\n			<th>Points Gained</th>\n			<th>Points Lost</th>\n			<th>Defined Comment</td>\n			<th>Unique Comment</td>\n		</tr>\n	</thead>\n	<tbody>\n		" + table + "\n	</tbody>\n</table>\n<p>The documentation for \"Webgrader: Fixed\" is avaliable <a href=\"https://github.com/slang800/webgrader-fixed/blob/master/README.md\">here</a>. If you have any questions or you find a bug, open an issue <a href=\"https://github.com/slang800/webgrader-fixed/issues\">here</a>. If you find this plugin useful, tip me on Gittip: <iframe style=\"border: 0; margin: 0; padding: 0;\" src=\"https://www.gittip.com/slang800/widget.html\" width=\"48pt\" height=\"22pt\"></iframe> </p>");
+  pkBaseURL = "https:" === document.location.protocol ? "https://piwik.packwi.com/" : "http://piwik.packwi.com/";
+
+  $('#lblReport').html("<style>\n.class_info {\ndisplay: inline;\npadding-left: 15px;\n}\n#assignments{\nmargin: 20px;\ndisplay: inline-block;\n}\n#lblReport div {\ndisplay: inline-block;\n}\n#assignments td, #assignments th{\nborder-bottom:1px solid #000;\npadding: 5px 15px;\nvertical-align: middle;\n}\n#assignments td.has_pie{\npadding-right: 5px;\ntext-align: right;\n}\n#assignments thead{\nfont-size: 10px;\ntext-align: left;\nbackground: #999;\n}\n#lblReport canvas, #lblReport p{\nvertical-align: middle;\n}\ntable.tablesorter thead tr .header {\nbackground-image: url('data:image/gif;base64,R0lGODlhFQAJAIAAACMtMP///yH5BAEAAAEALAAAAAAVAAkAAAIXjI+AywnaYnhUMoqt3gZXPmVg94yJVQAAOw==');\nbackground-repeat: no-repeat;\nbackground-position: center right;\ncursor: pointer;\n}\ntable.tablesorter thead tr .headerSortUp {\nbackground-image: url('data:image/gif;base64,R0lGODlhFQAEAIAAACMtMP///yH5BAEAAAEALAAAAAAVAAQAAAINjB+gC+jP2ptn0WskLQA7');\n}\ntable.tablesorter thead tr .headerSortDown {\nbackground-image: url('data:image/gif;base64,R0lGODlhFQAEAIAAACMtMP///yH5BAEAAAEALAAAAAAVAAQAAAINjI8Bya2wnINUMopZAQA7');\n}\ntable.tablesorter thead tr .headerSortDown, table.tablesorter thead tr .headerSortUp {\nbackground-color: #8dbdd8;\n}\np iframe{\nvertical-align: middle;\n}\n</style>\n" + stats + "\n<table id=\"assignments\" class=\"tablesorter\">\n	<thead>\n		<tr>\n			<th>Name</td>\n			<th>Due Date</td>\n			<th colspan=\"2\">Score</td>\n			<th colspan=\"2\">% of Total Grade</td>\n			<th>Points Gained</th>\n			<th>Points Lost</th>\n			<th>Defined Comment</td>\n			<th>Unique Comment</td>\n		</tr>\n	</thead>\n	<tbody>\n		" + table + "\n	</tbody>\n</table>\n<p>The documentation for \"Webgrader: Fixed\" is avaliable <a href=\"https://github.com/slang800/webgrader-fixed/blob/master/README.md\">here</a>. If you have any questions or you find a bug, open an issue <a href=\"https://github.com/slang800/webgrader-fixed/issues\">here</a>. If you find this plugin useful, tip me on Gittip: <iframe style=\"border: 0; margin: 0; padding: 0;\" src=\"https://www.gittip.com/slang800/widget.html\" width=\"48pt\" height=\"22pt\"></iframe> </p>\n<noscript>\n	<p><img src=\"http://piwik.packwi.com/piwik.php?idsite=3\" style=\"border:0\" alt=\"\" /></p>\n</noscript>");
+
+  try {
+    piwikTracker = Piwik.getTracker("" + pkBaseURL + "piwik.php", 3);
+    piwikTracker.trackPageView();
+    piwikTracker.enableLinkTracking();
+  } catch (err) {
+    console.log(err);
+  }
 
   $("span.pie").peity("pie", {
     diameter: '30'

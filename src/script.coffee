@@ -5,19 +5,6 @@
 # that webgrader displays scores. In short, this project uses a ton of bad
 # practices, don't learn from it.
 
-
-`
-var _gaq = _gaq || [];
-_gaq.push(['_setAccount', 'UA-37054480-1']);
-_gaq.push(['_trackPageview']);
-
-(function() {
-var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
-ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
-var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
-})();
-`
-
 round = (number, decmils) ->
 	Math.round(number*Math.pow(10,decmils))/Math.pow(10,decmils)
 
@@ -165,6 +152,8 @@ for key, value of class_info
 		#{key}: <b>#{if isNaN(value) then value else round(value, 2)}</b>
 	</p>"""
 
+pkBaseURL = if "https:" is document.location.protocol then "https://piwik.packwi.com/" else "http://piwik.packwi.com/"
+
 $('#lblReport').html("""
 	<style>
 .class_info {
@@ -233,7 +222,18 @@ p iframe{
 		</tbody>
 	</table>
 	<p>The documentation for "Webgrader: Fixed" is avaliable <a href="https://github.com/slang800/webgrader-fixed/blob/master/README.md">here</a>. If you have any questions or you find a bug, open an issue <a href="https://github.com/slang800/webgrader-fixed/issues">here</a>. If you find this plugin useful, tip me on Gittip: <iframe style="border: 0; margin: 0; padding: 0;" src="https://www.gittip.com/slang800/widget.html" width="48pt" height="22pt"></iframe> </p>
+	<noscript>
+		<p><img src="http://piwik.packwi.com/piwik.php?idsite=3" style="border:0" alt="" /></p>
+	</noscript>
 """)
+
+try
+	piwikTracker = Piwik.getTracker("#{pkBaseURL}piwik.php", 3)
+	piwikTracker.trackPageView()
+	piwikTracker.enableLinkTracking()
+catch err
+	console.log err
+
 
 $("span.pie").peity "pie", diameter: '30'
 $("span.small_pie").peity "pie", diameter: '15'
