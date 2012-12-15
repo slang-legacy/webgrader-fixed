@@ -24,4 +24,4 @@ I use the word "webgrader" because that's what this site was originally called. 
 
 "points gained" is how many points that assignment adds to your grade. Therefore, adding up all the values in that column equals your total grade.
 
-This is released under [WTFPL](http://sam.zoy.org/wtfpl/).
+This is released under [WTFPL](https://raw.github.com/slang800/webgrader-fixed/master/LICENSE).
