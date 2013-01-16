@@ -7,6 +7,6 @@
    "description": "Improvements for Webgrader",
    "update_url": "https://raw.github.com/slang800/webgrader-fixed/master/updates.xml",
    "name": "Webgrader: Fixed",
-   "version": "1.3",
+   "version": "1.4",
    "manifest_version": 2
 }

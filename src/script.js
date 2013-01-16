@@ -1,5 +1,5 @@
 (function() {
-  var assignment, assignment_type, assignments, assignments_raw, class_info, class_info_html, convert_grade, key, multiplier, multiplier_sum, piwikTracker, pkBaseURL, print_grade, round, score, stats, table, tables, total_correct_grade, value, weight, _i, _j, _k, _l, _len, _len1, _len2, _len3, _ref, _ref1, _ref2;
+  var assignment, assignment_weight, assignments, assignments_raw, class_info, class_info_html, convert_grade, key, multiplier, multiplier_sums, piwikTracker, pkBaseURL, print_grade, round, score, stats, table, table_index, total_correct_grade, value, _i, _j, _k, _l, _len, _len1, _len2, _len3, _ref, _ref1;
 
   round = function(number, decmils) {
     return Math.round(number * Math.pow(10, decmils)) / Math.pow(10, decmils);
@@ -41,45 +41,42 @@
     class_info[key] = value;
   }
 
-  tables = $('#lblReport .ReportTable');
-
-  assignments_raw = {
-    formative: $(tables[4]).find('.ReportTable tr:not([class])'),
-    summative: $(tables[7]).find('.ReportTable tr:not([class])')
-  };
-
   assignments = [];
 
-  multiplier_sum = {
-    formative: 0,
-    summative: 0
-  };
+  multiplier_sums = [0, 0, 0, 0];
 
-  _ref1 = ['formative', 'summative'];
+  table_index = 0;
+
+  _ref1 = $('#lblReport .ReportTable');
   for (_i = 0, _len = _ref1.length; _i < _len; _i++) {
-    assignment_type = _ref1[_i];
-    _ref2 = assignments_raw[assignment_type];
-    for (_j = 0, _len1 = _ref2.length; _j < _len1; _j++) {
-      assignment = _ref2[_j];
-      assignment = $(assignment).find('td');
-      if (assignment[3].innerHTML === '&nbsp;' || assignment[2].innerHTML === '&nbsp;') {
-        score = NaN;
-        multiplier = 0;
-      } else {
-        score = eval(assignment[3].innerHTML) / eval(assignment[2].innerHTML);
-        multiplier = eval(assignment[2].innerHTML) / 4;
+    table = _ref1[_i];
+    if ((assignments_raw = $(table).find('.ReportTable tr:not([class])')).length !== 0) {
+      for (_j = 0, _len1 = assignments_raw.length; _j < _len1; _j++) {
+        assignment = assignments_raw[_j];
+        assignment = $(assignment).find('td');
+        if (assignment[3].innerHTML === '&nbsp;' || assignment[2].innerHTML === '&nbsp;') {
+          score = NaN;
+          multiplier = 0;
+        } else {
+          score = eval(assignment[3].innerHTML) / eval(assignment[2].innerHTML);
+          multiplier = eval(assignment[2].innerHTML) / 4;
+        }
+        multiplier_sums[table_index] += multiplier;
+        assignments.push({
+          name: assignment[0].innerHTML,
+          graded: score !== NaN,
+          weight: assignment_weight,
+          due_date: assignment[1].innerHTML,
+          score: score,
+          multiplier: multiplier,
+          defined_comment: assignment[6].innerHTML,
+          unique_comment: assignment[7].innerHTML,
+          table: table_index
+        });
       }
-      multiplier_sum[assignment_type] += multiplier;
-      assignments.push({
-        name: assignment[0].innerHTML,
-        graded: score !== NaN,
-        type: assignment_type,
-        due_date: assignment[1].innerHTML,
-        score: score,
-        multiplier: multiplier,
-        defined_comment: assignment[6].innerHTML,
-        unique_comment: assignment[7].innerHTML
-      });
+      table_index++;
+    } else if ((assignment_weight = $(table).find('i').html()) != null) {
+      assignment_weight = +(/\(([0-9]+)\%\)/.exec(assignment_weight)[1]) / 100;
     }
   }
 
@@ -87,8 +84,7 @@
 
   for (_k = 0, _len2 = assignments.length; _k < _len2; _k++) {
     assignment = assignments[_k];
-    weight = assignment['type'] === 'formative' ? 0.1 : 0.9;
-    assignment['percent_of_grade'] = (assignment['multiplier'] / multiplier_sum[assignment['type']]) * weight;
+    assignment['percent_of_grade'] = (assignment['multiplier'] / multiplier_sums[assignment['table']]) * assignment['weight'];
     assignment['points_gained'] = assignment['score'] * 4 * assignment['percent_of_grade'];
     assignment['points_lost'] = (1 - assignment['score']) * 4 * assignment['percent_of_grade'];
     if (!isNaN(assignment['points_gained'])) {

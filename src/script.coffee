@@ -64,45 +64,46 @@ for key, value of convert_grade(class_info['webgrader_grade'])
 	class_info[key] = value
 
 #get the grades
-tables = $('#lblReport .ReportTable')
-assignments_raw =
-	formative: $(tables[4]).find('.ReportTable tr:not([class])')
-	summative: $(tables[7]).find('.ReportTable tr:not([class])')
 
 assignments = []
-multiplier_sum =
-	formative: 0
-	summative: 0
+multiplier_sums = [0,0,0,0] # each element in the array is populated with sum of the multipliers in the table
+table_index = 0
 
 # turn all that html garbage into a nice array of assignments
-for assignment_type in ['formative', 'summative']
-	for assignment in assignments_raw[assignment_type]
-		assignment = $(assignment).find('td')
-		if assignment[3].innerHTML == '&nbsp;' or assignment[2].innerHTML == '&nbsp;'
-			score = NaN
-			multiplier = 0
-		else
-			score = eval(assignment[3].innerHTML) / eval(assignment[2].innerHTML)
-			multiplier = eval(assignment[2].innerHTML) / 4
-		
-		multiplier_sum[assignment_type] += multiplier
+for table in $('#lblReport .ReportTable')
+	if (assignments_raw = $(table).find('.ReportTable tr:not([class])')).length isnt 0
+		for assignment in assignments_raw
+			assignment = $(assignment).find('td')
+			if assignment[3].innerHTML == '&nbsp;' or assignment[2].innerHTML == '&nbsp;'
+				score = NaN
+				multiplier = 0
+			else
+				score = eval(assignment[3].innerHTML) / eval(assignment[2].innerHTML)
+				multiplier = eval(assignment[2].innerHTML) / 4
+			
+			multiplier_sums[table_index] += multiplier
 
-		assignments.push {
-			name: assignment[0].innerHTML
-			graded: score isnt NaN
-			type: assignment_type
-			due_date: assignment[1].innerHTML
-			score: score # as a percent
-			multiplier: multiplier
-			defined_comment: assignment[6].innerHTML
-			unique_comment: assignment[7].innerHTML
-		}
+			assignments.push {
+				name: assignment[0].innerHTML
+				graded: score isnt NaN
+				weight: assignment_weight
+				due_date: assignment[1].innerHTML
+				score: score # as a percent
+				multiplier: multiplier
+				defined_comment: assignment[6].innerHTML
+				unique_comment: assignment[7].innerHTML
+				table: table_index
+			}
+
+		table_index++
+	else if (assignment_weight = $(table).find('i').html())?
+		assignment_weight = +(/\(([0-9]+)\%\)/.exec(assignment_weight)[1])/100
 
 total_correct_grade = 0
 
+
 for assignment in assignments
-	weight = if assignment['type'] is 'formative' then 0.1 else 0.9
-	assignment['percent_of_grade'] = (assignment['multiplier'] / multiplier_sum[assignment['type']]) * weight
+	assignment['percent_of_grade'] = (assignment['multiplier'] / multiplier_sums[assignment['table']]) * assignment['weight']
 	assignment['points_gained'] = assignment['score']*4*assignment['percent_of_grade']
 	assignment['points_lost'] = (1-assignment['score'])*4*assignment['percent_of_grade']
 	unless isNaN(assignment['points_gained'])
