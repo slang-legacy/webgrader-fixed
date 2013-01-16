@@ -97,7 +97,7 @@ for table in $('#lblReport .ReportTable')
 
 		table_index++
 	else if (assignment_weight = $(table).find('i').html())?
-		assignment_weight = +(/\(([0-9]+)\%\)/.exec(assignment_weight)[1])/100
+		assignment_weight = +(/\(([0-9\.]+)\%\)/.exec(assignment_weight)[1])/100
 
 total_correct_grade = 0
 

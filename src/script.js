@@ -76,7 +76,7 @@
       }
       table_index++;
     } else if ((assignment_weight = $(table).find('i').html()) != null) {
-      assignment_weight = +(/\(([0-9]+)\%\)/.exec(assignment_weight)[1]) / 100;
+      assignment_weight = +(/\(([0-9\.]+)\%\)/.exec(assignment_weight)[1]) / 100;
     }
   }
 
